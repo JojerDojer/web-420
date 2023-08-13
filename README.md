@@ -1,2 +1,5 @@
-# web-420
-The Repository for web-420: RESTful APIs.
+# WEB 420 RESTful APIs
+
+## Contributors
+* John Davidson
+* Professor Krasso
