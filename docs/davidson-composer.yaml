@@ -1,0 +1,96 @@
+#-------------------------------------------
+# Title: davidson-composer.yaml
+# Author: John Davidson
+# Date: 08/27/23
+# Description: 
+#-------------------------------------------
+
+# Define Open API version
+openapi: "3.0.0"
+info:
+  title: Composer API
+  version: "1.0.0"
+
+# Tags
+tags:
+  - name: Composers
+
+# Paths
+paths:
+
+  # /composers path
+  /composers:
+    description: The composers catalog
+
+    # GET for retrieving all composers 
+    get:
+      tags:
+        - Composers
+      summary: Search for composers
+      description: Search for all composers 
+      operationId: findAllComposers      
+      responses:
+        "200":
+          description: Successfully retrieved all composers            
+        "500":
+          description: Server Exception
+        "501":
+          description: Database exception
+
+    # POST for adding a composer
+    post:
+      tags:
+        - Composers
+      summary: Add composer
+      description: Add a new composer to the composer catalog
+      operationId: createComposer
+      requestBody:
+        description: Composer's information
+        content: 
+          application/json: 
+            schema: 
+              type: object
+              required:
+                - firstName
+                - lastName
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string    
+        required: true          
+      responses:
+        "200":
+          description: Composer has been successfully added
+        "500": 
+          description: Server exception
+        "501":
+          description: Database exception    
+
+  # /composers/{id} path  
+  /composers/{id}:  
+    # GET for retrieving a composer by id
+    get:
+      tags:
+        - Composers
+      summary: Search for composer by id 
+      description: Search for a specified composer by their id 
+      operationId: findComposerById
+      parameters:    
+        - name: id 
+          in: path
+          description: The id of a requested composer
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully retrieved composer
+        "500": 
+          description: Server exception
+        "501": 
+          description: Database exception
+
+             
+
+        
