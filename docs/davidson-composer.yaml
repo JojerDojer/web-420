@@ -19,7 +19,7 @@ tags:
 paths:
 
   # /composers path
-  /composers:
+  /api/composers:
     description: The composers catalog
 
     # GET for retrieving all composers 
@@ -68,7 +68,7 @@ paths:
           description: Database exception    
 
   # /composers/{id} path  
-  /composers/{id}:  
+  /api/composers/{id}:  
     # GET for retrieving a composer by id
     get:
       tags:

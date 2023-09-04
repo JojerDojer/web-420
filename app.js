@@ -17,6 +17,20 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const mongoose = require('mongoose');
 
+
+const composerAPI = require('./routes/davidson-composer-routes'); //Imports the composerAPI routes.
+const Composer = require('./models/davidson-composer') // Imports the Composer model.
+
+// Stores the connection string to mongoDB
+const CONN = 'mongodb+srv://web420_user:s3cret@bellevueuniversity.feyswh3.mongodb.net/web420DB';
+
+// Sets up the connection to MongoDB.
+mongoose.connect(CONN).then(() => {
+    console.log('Connection to MongoDB database was successful');
+}).catch(err => {
+    console.log('MongoDB Error: ' + err.message);
+})
+
 // Creates an express application instance.
 const app = express();
 
@@ -44,6 +58,8 @@ const openapiSpecification = swaggerJsdoc(options);
 
 // Serve Swagger documentation using Swagger UI middleware.
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
+
+app.use('/api', composerAPI)
 
 // Starts the express server and listens on port 3000. 
 app.listen(PORT, () => {
