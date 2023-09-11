@@ -14,7 +14,7 @@ const Composer = require('../models/davidson-composer'); // Imports the Composer
 /**
  * findAllComposers
  * @openapi
- * /api/composers
+ * /api/composers:
  * get:
  *   tags:
  *     - Composers
@@ -56,7 +56,7 @@ router.get('/composers', async(req, res) => {
 /**
  * findComposerById
  * @openapi
- * /api/composers/:id
+ * /api/composers/{id}:
  * get:
  *   tags:
  *     - Composers
@@ -122,7 +122,7 @@ router.get('/composers/:id', async(req, res) => {
  *               - firstName
  *               - lastName
  *             properties:
- *               firstName
+ *               firstName:
  *                 type: string
  *               lastName:
  *                 type: string
