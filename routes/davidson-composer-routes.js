@@ -28,26 +28,17 @@ const Composer = require('../models/davidson-composer'); // Imports the Composer
  *     '501':
  *       description: MongoDB Exception.  
  */       
+
+// Define a route handler for GET requests. 
 router.get('/composers', async(req, res) => {    
     try {
-        // Retrieve an array of all composers.
-        Composer.find({}, function(err, composers) {
-            // If error occurs Mongo's behalf, respond with mongo error message.
-            if (err) {
-                console.log(err);
-                res.status(501).send({
-                    'message': `MongoDB Exception: ${err}`
-                })
-            // If successful, respond with array of composers.
-            } else {
-                console.log(composers);
-                res.json(composers);
-            }
-        })
+        // Find all composers in the database.        
+        const composers = await Composer.find();
+        // Send a successful response and the found persons as JSON.            
+        res.status(200).json(composers)        
     // If error occurs on the server's behalf, respond with server error message.
-    } catch (e) {
-        console.log(e);
-        res.status(500).send({
+    } catch (e) {        
+        res.status(500).json({
             'message': `Server Exception: ${e.message}`
         })
     }
@@ -78,35 +69,28 @@ router.get('/composers', async(req, res) => {
  *       description: MongoDB Exception.  
  */   
 
-router.get('/composers/:id', async(req, res) => {     
+// Define a route handler for GET requests for a composer by their id.
+router.get('/composers/:id', async(req, res) => {
+    // Stores the id parameter from the URL in the 'id' variable.
+    const id = req.params.id;
     try {
-        // Retrieve a composer by id parameter.
-        Composer.findOne({'_id': req.params.id}, function(err, composer) {
-            // If error occurs Mongo's behalf, respond with mongo error message.
-            if (err) {                
-                console.log(err);
-                res.status(501).send({
-                    'message': `MongoDB Exception: ${err}`
-                })
-            // If successful, respond with composer document.
-            } else {
-                console.log(composer);
-                res.json(fruit);
-            }
-        })
-    // If error occurs on the server's behalf, respond with server error message.
+        // Find composer by their id in the database.
+        const findComposerById = await Composer.findById(id);
+        // Send a successful response and found composer as JSON.
+        res.status(200).json(findComposerById);
     } catch (e) {
-        console.log(e);
-        res.status(500).send({
+        // If error occurs, send server error response.
+        res.status(500).json({
             'message': `Server Exception: ${e.message}`
-        })
+        });
     }
-})
+});     
+    
 
 /**
  * createComposer
  * @openapi
- * /api/composer:
+ * /api/composers:
  *   post:
  *     tags:
  *       - Composer
@@ -135,34 +119,25 @@ router.get('/composers/:id', async(req, res) => {
  *         description: MongoDB Exception.
  */
 
+// Define a route handler for POST request.
 router.post('/composers', async(req, res) => {
+    // Creates a new composer object based on data received in the request body.
+    const newComposer = new Composer({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    });
     try {
-        // Creates a new composer object with data from the request body.
-        const newComposer = {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName
-        }
-        await Composer.create(newComposer, function(err, composer) {
-            // If error occurs Mongo's behalf, respond with mongo error message.
-            if (err) {
-                console.log(err);
-                res.status(501).send({
-                    'message': `MongoDB Exception: ${err}`
-                })
-            // If successful, respond with newly created composer document.
-            } else {
-                console.log(composer);
-                res.json(composer);
-            }
-        })
-    // If error occurs on the server's behalf, respond with server error message.
+        // Save a new Composer object to the database.        
+        await newComposer.save();
+        // Send a successful response and the created composer as JSON.
+        res.status(201).json(newComposer)
     } catch (e) {
-        console.log(e);
-        res.status(500).send({
+        // If error occurs, send a server response.
+        res.status(500).json({
             'message': `Server Exception: ${e.message}`
-        })        
+        });
     }
-})
-
+});            
+ 
 // Exports the router module.
 module.exports = router;

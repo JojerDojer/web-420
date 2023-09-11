@@ -111,7 +111,7 @@ router.post('/persons', async(req, res) => {
         // Use await to save the new Person object to the database.
         await createPerson.save();
         // Send a successful response and the created person as JSON.
-        res.status(200).json(createPerson);
+        res.status(201).json(createPerson);
     } catch (error) {
         // If error occurs, send a server error response.
         res.status(500).json({
