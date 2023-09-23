@@ -18,9 +18,10 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const mongoose = require('mongoose');
 
 
-const composerAPI = require('./routes/davidson-composer-routes'); //Imports the composerAPI routes.
-const Composer = require('./models/davidson-composer') // Imports the Composer model.
-const personAPI = require('./routes/davidson-person-routes') //Imports the personAPI.
+const composerAPI = require('./routes/davidson-composer-routes'); // Imports the composerAPI routes.
+const Composer = require('./models/davidson-composer'); // Imports the Composer model.
+const personAPI = require('./routes/davidson-person-routes'); // Imports the personAPI.
+const userAPI = require('./routes/davidson-session-routes'); // Imports the userAPI.
 
 // Stores the connection string to mongoDB
 const CONN = 'mongodb+srv://web420_user:s3cret@bellevueuniversity.feyswh3.mongodb.net/web420DB';
@@ -62,6 +63,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
 app.use('/api', composerAPI);
 app.use('/api', personAPI);
+app.use('/api', userAPI);
 
 // Starts the express server and listens on port 3000. 
 app.listen(PORT, () => {
