@@ -7,9 +7,9 @@
 ============================================
 */
 
-const express = require('express');
-const router = express.Router();
-const Customer = require('../models/davidson-customer');
+const express = require('express'); // Import the express module.
+const router = express.Router(); // Import the router module.
+const Customer = require('../models/davidson-customer'); // Import the Customer model.
 
 /**
  * createCustomer
@@ -130,6 +130,7 @@ router.post('/customers/:username/invoices', async(req, res) => {
     try {        
         // Query the Customers' collection, finding a customer by username.
         const customer = await Customer.findOne({ username: req.params.username });
+        // If the customer is not found in the database, send a 404 response code with a JSON message.
         if (!customer) {
             return res.status(404).json({ message: "Username does not exist" });
           }
