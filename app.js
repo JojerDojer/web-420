@@ -22,6 +22,7 @@ const composerAPI = require('./routes/davidson-composer-routes'); // Imports the
 const Composer = require('./models/davidson-composer'); // Imports the Composer model.
 const personAPI = require('./routes/davidson-person-routes'); // Imports the personAPI.
 const userAPI = require('./routes/davidson-session-routes'); // Imports the userAPI.
+const customerAPI = require('./routes/davidson-node-shopper-routes'); // Imports the customerAPI.
 
 // Stores the connection string to mongoDB
 const CONN = 'mongodb+srv://web420_user:s3cret@bellevueuniversity.feyswh3.mongodb.net/web420DB';
@@ -64,6 +65,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 app.use('/api', composerAPI);
 app.use('/api', personAPI);
 app.use('/api', userAPI);
+app.use('/api', customerAPI);
+
 
 // Starts the express server and listens on port 3000. 
 app.listen(PORT, () => {

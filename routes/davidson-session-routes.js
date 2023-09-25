@@ -139,7 +139,7 @@ router.post('/login', async(req, res) => {
     } catch (error) {
         if (error.name === 'MongoError') {
             // If it is a MongoDB error, send a 501 response code with MongoDB error message.
-            res.status(501).json({ message: `MongoDB Exception ${error.message}`});
+            return res.status(501).json({ message: `MongoDB Exception ${error.message}`});
         }
         // If not a MongoDB error, send a 500 response code with a server error message.
         return res.status(500).json({ message: `Server Exception ${error.message}`});
