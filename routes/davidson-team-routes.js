@@ -3,7 +3,7 @@
 ; Title: davidson-team-routes.js
 ; Author: John Davidson
 ; Date: 10/08/2023
-; Description: The Routing for WEB 420 - Capstone Project
+; Description: The Routing for WEB 420 - Capstone Project.
 ============================================
 */
 
