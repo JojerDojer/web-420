@@ -18,11 +18,13 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const mongoose = require('mongoose');
 
 
+
 const composerAPI = require('./routes/davidson-composer-routes'); // Imports the composerAPI routes.
 const Composer = require('./models/davidson-composer'); // Imports the Composer model.
 const personAPI = require('./routes/davidson-person-routes'); // Imports the personAPI.
 const userAPI = require('./routes/davidson-session-routes'); // Imports the userAPI.
 const customerAPI = require('./routes/davidson-node-shopper-routes'); // Imports the customerAPI.
+const teamAPI = require('./routes/davidson-team-routes') // Imports the teamAPI.
 
 // Stores the connection string to mongoDB
 const CONN = 'mongodb+srv://web420_user:s3cret@bellevueuniversity.feyswh3.mongodb.net/web420DB';
@@ -43,6 +45,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json()); // Parse incoming JSON data.
 app.use(express.urlencoded({ extended: true })); // Parse incoming URL-encoded data. 
+app.use('/', teamAPI)
 
 // Configuration options for Swagger documentation configuration.
 const options = {
@@ -62,13 +65,17 @@ const openapiSpecification = swaggerJsdoc(options);
 // Serve Swagger documentation using Swagger UI middleware.
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
-app.use('/api', composerAPI);
+// Route API requests to the specified router.
+app.use('/api', composerAPI); 
 app.use('/api', personAPI);
 app.use('/api', userAPI);
 app.use('/api', customerAPI);
+app.use('/api', teamAPI)
 
 
 // Starts the express server and listens on port 3000. 
 app.listen(PORT, () => {
     console.log('Application started and listening on port ' + PORT)
 });
+
+
